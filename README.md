@@ -1,10 +1,11 @@
 # Example Neo4j API Application
 
 
-How to install:
+## How to install:
 
-Install Neo4j Desktop and start up an instance with port pointed to 7687
+1. Install Neo4j Desktop and start up a graph instance with port pointed to 7687
 
+2. Run below shell commands:
 ```shell
 npm install
 npm start
