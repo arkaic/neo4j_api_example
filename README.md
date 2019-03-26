@@ -12,9 +12,9 @@ npm start
 
 ## API endpoints
 
-Creating an employee with a name and id:
+Creating an employee with the name "Forest" and id=6:
 ```
-curl -X POST http://localhost:3000/create_employee/:name/:emp_id
+curl --header "Content-Type: application/json" -X POST http://localhost:3000/create_employee --data '{"name":"Forest", "emp_id":"6"}'
 ```
 
 Retrieving all employees, a JSON list of {name, emp_id} objects:

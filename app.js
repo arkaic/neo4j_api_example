@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const neo4j = require('neo4j-driver').v1;
 
 const app = express();
@@ -9,21 +10,31 @@ const dbUri = `bolt://localhost:${dbPort}`;
 const user = 'neo4j';
 const password = 'password';
 
+// enable cors for html form to retrieve all employees
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+// enable parsing body of POST requests
+app.use(bodyParser());
+
 // create one
-app.post('/create_employee/:name/:id', (req, res) => {
+app.post('/create_employee/', (req, res) => {
     const driver = neo4j.driver(dbUri, neo4j.auth.basic(user, password));
     const session = driver.session();
-    const endMsg = `Created ${req.params.name}, ${req.params.id}`;
 
-    console.log(req.body);
+    console.log('body:',req.body);
+    const name = req.body.name;
+    const id = req.body.emp_id;
+    const endMsg = `Created ${name}, ${id}`;
 
     session.run(
         'CREATE (:Employee {emp_id: $emp_id, name: $name})',
-        {name: req.params.name, emp_id: req.params.id}
+        {name: name, emp_id: id}
     ).then(() => {
-        session.close(() => {
-            console.log(endMsg + ' yup');
-        });
+        session.close(() => console.log(endMsg));
         res.send(endMsg);
     });
 });

@@ -6,23 +6,47 @@
 </head>
 
 <body>
+    <h>Create Employee</h>
+    <form action="http://localhost:3000/create_employee" method="post">
+        Name: <input type="text" name="name"><br>
+        Id: <input type="text" name="emp_id"><br>
+        <input type="submit" value="Create Employee">
+    </form>
 
-<!-- <button>Change content of all p elements</button>
+    <br/>
 
-<p>This is a paragraph.</p>
-<p>This is another paragraph.</p> -->
+    <button id="get-emp">Get employees</button>
 
-<form action="http://localhost:3000/create_employee/perfume/777" method="post">
-    Name: <input type="text" name="name"><br>
-    Id: <input type="text" name="id"><br>
-    <input type="submit" value="Submit">
-</form>
-
+    <table id="empl-table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+    </table>
 </body>
+
 <script>
     $(document).ready(function(){
-        $("button").click(function(){
-            $("p").html("Hello <b>world!</b>");
+        $("#get-emp").click(function(){
+            console.log('blah');
+            fetch('http://localhost:3000/get_all_employees', {mode: 'cors'}).then(function(response) {
+                return response.json();
+            }).then(function(employees) {
+                // console.log(JSON.stringify(data));
+                
+                let table = document.getElementById("empl-table");
+                table.innerHTML = '';
+                for (let employee of employees) {
+                    let row = table.insertRow(0);
+                    
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+
+                    // Add some text to the new cells:
+                    cell1.innerHTML = employee.emp_id;
+                    cell2.innerHTML = employee.name;
+                }
+            });
         });
     });
 </script>
