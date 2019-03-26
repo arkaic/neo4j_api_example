@@ -56,4 +56,4 @@ app.get('/get_all_employees', (req, res) => {
     });
 });
 
-app.listen(appPort, () => console.log(`listening on port ${appPort}!\nneo4j uri: ${dbUri}`))
+app.listen(appPort, () => console.log(`app listening on port ${appPort}!\nneo4j uri: ${dbUri}`))
