@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+
+<!-- <button>Change content of all p elements</button>
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p> -->
+
+<form action="http://localhost:3000/create_employee/perfume/777" method="post">
+    Name: <input type="text" name="name"><br>
+    Id: <input type="text" name="id"><br>
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+<script>
+    $(document).ready(function(){
+        $("button").click(function(){
+            $("p").html("Hello <b>world!</b>");
+        });
+    });
+</script>
+
+</html>

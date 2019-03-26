@@ -10,10 +10,12 @@ const user = 'neo4j';
 const password = 'password';
 
 // create one
-app.put('/create_employee/:name/:id', (req, res) => {
+app.post('/create_employee/:name/:id', (req, res) => {
     const driver = neo4j.driver(dbUri, neo4j.auth.basic(user, password));
     const session = driver.session();
     const endMsg = `Created ${req.params.name}, ${req.params.id}`;
+
+    console.log(req.body);
 
     session.run(
         'CREATE (:Employee {emp_id: $emp_id, name: $name})',

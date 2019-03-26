@@ -14,7 +14,7 @@ npm start
 
 Creating an employee with a name and id:
 ```
-curl -X PUT http://localhost:3000/create_employee/:name/:emp_id
+curl -X POST http://localhost:3000/create_employee/:name/:emp_id
 ```
 
 Retrieving all employees, a JSON list of {name, emp_id} objects:
