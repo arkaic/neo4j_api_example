@@ -22,3 +22,5 @@ Retrieving all employees, a JSON list of {name, emp_id} objects:
 http://localhost:3000/get_all_employees
 ```
 
+## UI
+Open `index.html` in a browser. There will be inputs for creating Employee nodes with Name and Id parameters. There is also a button for getting and displaying all employee nodes.
