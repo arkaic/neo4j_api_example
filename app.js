@@ -25,10 +25,9 @@ app.post('/create_employee/', (req, res) => {
     const driver = neo4j.driver(dbUri, neo4j.auth.basic(user, password));
     const session = driver.session();
 
-    console.log('body:',req.body);
     const name = req.body.name;
     const id = req.body.emp_id;
-    const endMsg = `Created ${name}, ${id}`;
+    const endMsg = `Successfully created ${id}: ${name}`;
 
     session.run(
         'CREATE (:Employee {emp_id: $emp_id, name: $name})',

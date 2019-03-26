@@ -7,7 +7,7 @@
 
 <body>
     <h>Create Employee</h>
-    <form action="http://localhost:3000/create_employee" method="post">
+    <form id=create-form action="http://localhost:3000/create_employee" method="post">
         Name: <input type="text" name="name"><br>
         Id: <input type="text" name="emp_id"><br>
         <input type="submit" value="Create Employee">
@@ -15,37 +15,68 @@
 
     <br/>
 
-    <button id="get-emp">Get employees</button>
+    <button id="get-empl">Get employees</button>
 
-    <table id="empl-table">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-        </tr>
-    </table>
+    <div id="table-wrapper">
+        <table id="empl-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </body>
 
 <script>
-    $(document).ready(function(){
-        $("#get-emp").click(function(){
-            console.log('blah');
+    $(document).ready(function() {
+        // to prevent page refresh, override submit functionality and use handler
+        // here to show an alert
+        $('#create-form').on('submit', function(e) {
+            e.preventDefault();
+
+            // easier to use ajax over fetch in the case of sending form data here
+            $.ajax({
+                url : "http://localhost:3000/create_employee",
+                type: "POST",
+                data: $(this).serialize(),
+                success: function (data) {
+                    alert(data);
+                },
+                error: function (jXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+
+        // clicking get employees button to rerender table of ids and employees
+        $("#get-empl").click(function() {
             fetch('http://localhost:3000/get_all_employees', {mode: 'cors'}).then(function(response) {
                 return response.json();
             }).then(function(employees) {
-                // console.log(JSON.stringify(data));
-                
-                let table = document.getElementById("empl-table");
-                table.innerHTML = '';
-                for (let employee of employees) {
-                    let row = table.insertRow(0);
-                    
-                    var cell1 = row.insertCell(0);
-                    var cell2 = row.insertCell(1);
+                // doing work to recreate table here to keep headers
+                const tableWrapper = document.getElementById("table-wrapper");
+                const table = document.createElement('table');
+                table.setAttribute('id', 'empl-table');
+                const headerRow = table.createTHead().insertRow();
 
-                    // Add some text to the new cells:
-                    cell1.innerHTML = employee.emp_id;
-                    cell2.innerHTML = employee.name;
+                let th = document.createElement('th');
+                th.innerHTML = "ID";
+                headerRow.appendChild(th);
+                th = document.createElement('th');
+                th.innerHTML = "Name";
+                headerRow.appendChild(th);
+
+                for (let employee of employees) {
+                    let row = table.insertRow();
+                    let cell = row.insertCell(0);
+                    cell.innerHTML = employee.emp_id;
+                    cell = row.insertCell(1);
+                    cell.innerHTML = employee.name;
                 }
+                tableWrapper.replaceChild(table, document.getElementById("empl-table"));
             });
         });
     });
