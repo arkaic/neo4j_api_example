@@ -23,6 +23,7 @@ app.get('/create_employee/:name/:id', (req, res) => {
     });
 });
 
+// get all
 app.get('/get_all_employees', (req, res) => {
     const driver = neo4j.driver(dbUri, neo4j.auth.basic(user, password));
     const session = driver.session();
