@@ -2,11 +2,14 @@ const express = require('express');
 const neo4j = require('neo4j-driver').v1;
 
 const app = express();
-const port = 3000;
-const dbUri = 'bolt://localhost:7687';
+const appPort = 3000;
+
+const dbPort = 7687;
+const dbUri = `bolt://localhost:${dbPort}`;
 const user = 'neo4j';
 const password = 'password';
 
+// create one
 app.get('/create_employee/:name/:id', (req, res) => {
     const driver = neo4j.driver(dbUri, neo4j.auth.basic(user, password));
     const session = driver.session();
@@ -41,4 +44,4 @@ app.get('/get_all_employees', (req, res) => {
     });
 });
 
-app.listen(port, () => console.log(`listening on port ${port}!`))
+app.listen(appPort, () => console.log(`listening on port ${appPort}!\nneo4j uri: ${dbUri}`))
