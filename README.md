@@ -19,7 +19,7 @@ curl --header "Content-Type: application/json" -X POST http://localhost:3000/cre
 
 Retrieving all employees, a JSON list of {name, emp_id} objects:
 ```
-http://localhost:3000/get_all_employees
+curl http://localhost:3000/get_all_employees
 ```
 
 ## UI
